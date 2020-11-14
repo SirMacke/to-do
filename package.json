@@ -8,8 +8,7 @@
     "client": "npm run serve --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "start": "node server.js",
-    "build": "node build/build.js",
-    "heroku-postbuild": "npm install --only=dev --no-shrinkwrap && npm run build"
+    "build": "npm install --prefix client && npm run build --prefix client"
   },
   "author": "",
   "license": "ISC",
