@@ -9,13 +9,6 @@ require('./startup/config.js')();
 require('./startup/validation.js')();
 require('./startup/prod.js')(app);
 
-if (process.env.NODE_ENV == 'production') {
-  app.use(express.static('client/dist'))
-  app.get('*', (req, res) => {
-      res.sendFile(path.resolve(__dirname, 'client', 'dist', 'index.html'))
-  })
-}
-
 var port = process.env.PORT || 3000;
 const server = app.listen(port, () => winston.info(`Listening on port ${port}...`));
 
