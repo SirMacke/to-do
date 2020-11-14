@@ -1,4 +1,4 @@
 {
   "jwtPrivateKey": "1234",
-  "db": "mongodb+srv://admin:ceatrhvxJhruki5L@cluster0.c6mqc.mongodb.net/Cluster0?retryWrites=true"
+  "db": "mongodb+srv://admin:wbKc8ngaxBDY2LXU@cluster0.c6mqc.mongodb.net/Cluster0?retryWrites=true"
 }
