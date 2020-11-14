@@ -27,19 +27,13 @@ module.exports = function(app) {
   }));
   app.use(cookieParser());
 
+  app.use(enforce.HTTPS({ trustProtoHeader: true }));
+  app.use(serveStatic(__dirname + '/dist'));
+  app.use(history());
+
   app.use('/api/home', home);
   app.use('/api/login', login);
   app.use('/api/signup', signup);
-
-  if (process.env.NODE_ENV == 'production') {
-    app.use(enforce.HTTPS({ trustProtoHeader: true }));
-    app.use(serveStatic(__dirname + '/dist'));
-    app.use(history());
-    
-    app.get('*', (req, res) => {
-        res.sendFile(path.resolve(__dirname, 'client', 'dist', 'index.html'))
-    })
-  }
 
   app.use(error);
 }
