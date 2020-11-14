@@ -19,31 +19,27 @@ const userSchema = new mongoose.Schema({
     minlength: 5,
     maxlength: 1024
   },
-  isAdmin: {
-    type: Boolean,
-    default: false,
-  },
-  contactInquiry: [mongoose.Schema.Types.ObjectId]
-  // roles: [],
-  // operations: []
+  tasks: {
+    type: Array
+  }
 });
 
 userSchema.methods.generateAuthToken = function() {
-  const token = jwt.sign({ _id: this._id, isAdmin: this.isAdmin }, config.get('jwtPrivateKey'));
+  const token = jwt.sign({ _id: this._id }, config.get('jwtPrivateKey'));
   return token;
 }
 
 const User = mongoose.model('User', userSchema);
 
 function validateUser(user) {
-  const schema = {
+  const schema = Joi.object({
     usernameOrEmail: Joi.string().min(5).max(255),
     username: Joi.string().min(5).max(50),
     email: Joi.string().min(5).max(255).email(),
     password: Joi.string().min(5).max(255).required()
-  };
+  });
 
-  return Joi.validate(user, schema);
+  return schema.validate(user);
 }
 
 exports.userSchema = userSchema;

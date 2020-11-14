@@ -4,9 +4,9 @@ const cors = require('cors');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 
-const serveStatic = require('serve-static');
-const history = require('connect-history-api-fallback');
-const enforce = require('express-sslify');
+//const serveStatic = require('serve-static');
+//const history = require('connect-history-api-fallback');
+//const enforce = require('express-sslify');
 
 const cookieParser = require('cookie-parser');
 
@@ -21,9 +21,9 @@ module.exports = function(app) {
   app.use(morgan('tiny'));
   app.use(bodyParser.json());
 
-  app.use(enforce.HTTPS({ trustProtoHeader: true }));
-  app.use(serveStatic(__dirname + '/dist'));
-  app.use(history());
+  //app.use(enforce.HTTPS({ trustProtoHeader: true }));
+  //app.use(serveStatic(__dirname + '/dist'));
+  //app.use(history());
 
   app.use(express.json());
   app.use(bodyParser.urlencoded({
