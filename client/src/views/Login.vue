@@ -7,9 +7,6 @@
       <input type="password" v-model="state.password" placeholder="Password">
       <button type="submit">Login</button>
     </form>
-    <router-link to="/" class="bottom-link">
-      <a id="forgotPassword">Forgot Your Password?</a>
-    </router-link>
     <router-link to="/signup" class="bottom-link">
       <a id="signup">Signup</a>
     </router-link>
@@ -161,9 +158,6 @@ main
       color: #333333
       font-size: 1.1em
       width: auto
-
-    #forgotPassword
-      left: 35px
 
     #signup
       right: 35px

@@ -19,9 +19,7 @@ const userSchema = new mongoose.Schema({
     minlength: 5,
     maxlength: 1024
   },
-  tasks: {
-    type: Array
-  }
+  tasks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Task' }]
 });
 
 userSchema.methods.generateAuthToken = function() {

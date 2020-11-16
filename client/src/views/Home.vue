@@ -5,25 +5,25 @@
       <button :disabled="!isButtonDisabled">Add</button>
     </form>
     <div id="to-do-item__container">
-      <div class="to-do-item" v-for="(task, index) in state.tasks" :key="index">
-        <!--<input v-if="isSelected(task)" v-model="editedDescription" />-->
+      <div class="to-do-item" v-for="(task, index) in state.tasks" :key="task._id">
+        <input id="to-do-item__edit-input" v-if="isSelected(task)" v-model="state.editedDescription">
         <p>
           <span>{{ index + 1}}.</span>
-          {{ task }}
+          <span :class="isSelected(task) ? '--disabled' : '--enabled'">{{ task.description }}</span>
         </p>
-        <!--<div>
-          <span @click="isSelected(task) ?  unselect() : select(task)">
-            <i>{{isSelected(task) ? 'close': 'edit'}}</i>
+        <div class="icon__container">
+          <span class="icon-span" @click="isSelected(task) ? unselect() : select(task)">
+            <i :class="isSelected(task) ? 'fas fa-times' : 'fas fa-pencil-alt'"></i>
           </span>
 
-          <span @click="isSelected(task) ? updateTask(task, index) : removeTask(task, index)">
-            <i>{{ isSelected(task) ? 'save': 'delete' }}</i>
+          <span class="icon-span" @click="isSelected(task) ? updateTask(task, index) : removeTask(task, index)">
+            <i :class="isSelected(task) ? 'fas fa-save' : 'fas fa-trash-alt'"></i>
           </span>
-        </div>-->
+        </div>
       </div>
     </div>
   </main>
-  <router-link to="/" class="bottom-link">
+  <router-link to="/login" class="bottom-link">
     <a id="log-out">Log out</a>
   </router-link>
 </template>
@@ -50,17 +50,17 @@ export default {
     const isButtonDisabled = computed(() => { return state.description.length > 0 });
 
     async function createNewTask() {
-      const response = await axios.put("/api/home", {
+      const response = await axios.post("/api/home", {
         auth: storeData.state.User.user.auth,
         description: state.description
       });
-      state.tasks.push(response.data);
+      state.tasks.unshift(response.data);
       state.description = "";
     }
 
-    /*async function removeTask(task, index) {
-      await axios.delete("/api/home" + index);
-      state.tasks.splice(index, 1);
+    async function removeTask(task, index) {
+      const response = await axios.delete("/api/home/" + task._id, { headers: { auth: storeData.state.User.user.auth } });
+      if (response.data == task._id) { state.tasks.splice(index, 1); }
     }
 
     function select(task) {
@@ -69,24 +69,33 @@ export default {
     }
 
     function isSelected(task) {
-      return item._id === state.selected._id;
-    },
-    unselect() {
-      this.selected = {};
-      this.editedDescription = "";
-    },
-    async updateItem(item, i) {
-      const response = await axios.put("api/bucketListItems/" + item._id, {
-        description: this.editedDescription
+      return task._id === state.selected._id;
+    }
+
+    function unselect() {
+      state.selected = {};
+      state.editedDescription = "";
+    }
+
+    async function updateTask(task, index) {
+      console.log(state.editedDescription);
+      const response = await axios.put("/api/home/" + task._id, {
+        auth: storeData.state.User.user.auth,
+        description: state.editedDescription
       });
-      this.tasks[i] = response.data;
-      this.unselect();
-    }*/
+      state.tasks[index] = response.data;
+      unselect();
+    }
 
     return {
       state,
       isButtonDisabled,
-      createNewTask
+      createNewTask,
+      isSelected,
+      select,
+      unselect,
+      updateTask,
+      removeTask
     }
   }
 };
@@ -191,7 +200,51 @@ main
       border-radius: 5px
 
       p
-        margin-left: 15px
+        position: relative
+        top: 50%
+        transform: translateY(-50%)
+        left: 15px
+        height: auto
+        margin: auto 0
+
+        .--enabled
+          margin-left: 5px
+
+        .--disabled
+          display: none
+          opacity: 0
+
+      .icon__container
+        position: absolute
+        right: 15px
+        top: 50%
+        transform: translateY(-50%)
+
+        .icon-span
+          margin-left: 7.5px
+          font-size: 0.85em
+
+          i:hover
+            cursor: pointer
+
+      #to-do-item__edit-input
+        position: absolute
+        width: 80%
+        height: 35px
+        top: 50%
+        left: 25px
+        transform: translateY(-50%)
+        font-family: Lato
+        font-size: 1em
+        border: none
+        border-radius: 2.5px
+        color: #2c3e50
+        padding-left: 7.5px
+        margin-left: 12.5px
+        z-index: 5
+
+        &:focus
+          outline: none
 
 .bottom-link
   a

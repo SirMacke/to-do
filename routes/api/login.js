@@ -2,7 +2,9 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const _ = require('lodash');
+const validate = require('../../middleware/validate.js');
 const { User, validateUser } = require('../../models/user.js');
+const { Task } = require('../../models/task.js');
 
 router.post('/', async(req, res) => {
   const { error } = validateUser(req.body);
@@ -17,11 +19,18 @@ router.post('/', async(req, res) => {
 
   const token = user.generateAuthToken();
 
+  let tasks = [];
+
+  for (let i = 0; i < user.tasks.length; i++) {
+    console.log(user.tasks[i])
+    tasks.push(await Task.findById(user.tasks[i]));
+  }
+
   let response = {
     username: user.username,
     email: user.email,
     auth: token,
-    tasks: user.tasks
+    tasks: tasks
   }
 
   res.status(200).json(response);
