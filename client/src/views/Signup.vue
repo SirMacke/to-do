@@ -106,6 +106,12 @@ main
       margin-left: -7.5px
       background-color: #F3F5FA
 
+      @media (max-width: 500px)
+        width: 300px
+
+      @media (max-width: 400px)
+        width: 250px
+
       &::placeholder
         color: #333333
 
@@ -125,6 +131,9 @@ main
       background: none
       border: 2px solid #1892FF
       margin-top: 25px
+
+      @media (max-width: 400px)
+        width: 150px
 
       &:hover
         cursor: pointer

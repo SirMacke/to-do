@@ -112,6 +112,12 @@ main
   background-color: white
   border-radius: 10px
 
+  @media (max-width: 1080px)
+    width: 75vw
+
+  @media (max-width: 750px)
+    width: 90vw
+
   form
     position: relative
     width: 92.5%
@@ -134,6 +140,22 @@ main
       color: black
       padding-left: 12.5px
 
+      @media (max-width: 1350px)
+        width: 77.5%
+
+      @media (max-width: 750px)
+        width: 76.5%
+
+      @media (max-width: 500px)
+        font-size: 0.9em
+        width: 72.5%
+
+      @media (max-width: 400px)
+        width: 70%
+
+      @media (max-width: 350px)
+        width: 65%
+
       &::placeholder
         color: rgba(16, 16, 16, 0.5)
 
@@ -154,6 +176,19 @@ main
       background: none
       border: 2px solid #1892FF
       border-radius: 5px
+
+      @media (max-width: 1350px)
+        width: 17.5%
+
+      @media (max-width: 750px)
+        font-size: 1.1em
+
+      @media (max-width: 500px)
+        font-size: 1em
+        width: 20%
+
+      @media (max-width: 350px)
+        width: 22.5%
 
       &:hover
         cursor: pointer
@@ -242,6 +277,18 @@ main
         padding-left: 7.5px
         margin-left: 12.5px
         z-index: 5
+
+        @media (max-width: 750px)
+          width: 75%
+
+        @media (max-width: 500px)
+          width: 67.5%
+
+        @media (max-width: 400px)
+          width: 57.5%
+
+        @media (max-width: 300px)
+          width: 52.5%
 
         &:focus
           outline: none
