@@ -78,7 +78,6 @@ export default {
     }
 
     async function updateTask(task, index) {
-      console.log(state.editedDescription);
       const response = await axios.put("/api/home/" + task._id, {
         auth: storeData.state.User.user.auth,
         description: state.editedDescription
